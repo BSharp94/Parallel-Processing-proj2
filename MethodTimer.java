@@ -16,19 +16,19 @@ class MethodTimer{
 	public void startTimer(){
 
 		//record time
-		startTime = System.currentTimeMillis();
+		startTime = System.nanoTime();
 	}
 	public void endTimer(){
 
 		//record time
-		endTime = System.currentTimeMillis();
+		endTime = System.nanoTime();
 		
 		//calc diff
 		timeDiff = endTime - startTime;
 	}
 	public String getTimeString(){
 		
-		return "Time Diff in Millis: " + String.valueOf(timeDiff);
+		return "Time Diff in Seconds: " + (timeDiff /1000000000);
 	}
 
 }
