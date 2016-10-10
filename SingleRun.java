@@ -5,23 +5,47 @@ class SingleRun{
 	//global timer variable
 	static MethodTimer timer;
 
-	public SingleRun(MethodTimer timer,int dataSize){
+	public SingleRun(MethodTimer timer, String args[]){
 		
+		int arraySize=1000, matrixSize=100;
+		boolean print = false;
+		String file = "";
+
+		for(String s: args)
+			if(s.startsWith("--arraySize")){
+				String[] parts = s.split("=");
+				arraySize = Integer.parseInt(parts[1]);
+				
+			}else if(s.startsWith("--matrixSize")){
+				String[] parts = s.split("=");
+				matrixSize = Integer.parseInt(parts[1]);
+			}else if(s.startsWith("--print")){
+				print = true;
+				if(s.contains("=")){
+					String[] parts = s.split("=");
+					file = parts[1];
+				}
+			}
+
+		System.out.println("ArraySize = " + arraySize);
+		System.out.println("MatrixSize = " + matrixSize + "x" + matrixSize);
+
+
 		//set timer
 		this.timer = timer;
 
 		//run constant method
-		runConstant(dataSize);
+		runConstant(arraySize);
 
 		//run linear method
-		int randIndex = getRandIndex(dataSize);
-		runLinear(dataSize,randIndex);
+		int randIndex = getRandIndex(arraySize);
+		runLinear(arraySize,randIndex);
 
 		//run bubble method
-		runBubble(dataSize);
+		runBubble(arraySize);
 
 		//run matrix Mult
-		runMatrix(dataSize);
+		runMatrix(matrixSize);
 
 	}
  	public int getRandIndex(int dataSize){
@@ -155,12 +179,26 @@ class SingleRun{
 		}
 		System.out.println();
 	}
-	public void printMatrix(int[][] array, int dataSize){
+	public void printMatrix(int[][] array, int dataSize,String writeFile){
+		PrintWriter writer;
+
+		if(!writeFile.equals("")){
+			writer =  new PrintWriter(writeFile, "UTF-8");
+		}
+
 		for(int i = 0; i < dataSize; i++){
 			for(int j = 0; j < dataSize; j++){
-				System.out.print(array[i][j] + " ");
+				if(writer == null){
+					System.out.print(array[i][j] + " ");
+				}else{
+					writer.print(array[i][j] = "");
+				}
 			}
-			System.out.println();
+			if(writer == null){
+				System.out.println();
+			}else{
+				writer.print(array[i][j] + "");
+			}
 		}
 	}
 	public void runMatrix(int dataSize){
@@ -192,7 +230,7 @@ class SingleRun{
 		System.out.println("Matrix - " + timer.getTimeString());
 		
 		System.out.println("MatrixA:");
-		//printMatrix(matrixA,dataSize);
+		printMatrix(matrixA,dataSize,"");
 		
 		System.out.println("MatrixB:");
 		//printMatrix(matrixB,dataSize);
@@ -204,10 +242,18 @@ class SingleRun{
 
 	public static void main(String args[]){
 
+
+		
+
+
+
 		//Create Timer
 		timer = new MethodTimer();
+		
 
-		SingleRun run = new SingleRun(timer,1000);
+				
+		SingleRun run = new SingleRun(timer,args);
+		
 
 	}
 }
