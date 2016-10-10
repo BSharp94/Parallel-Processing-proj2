@@ -20,6 +20,9 @@ class SingleRun{
 		//run bubble method
 		runBubble(dataSize);
 
+		//run matrix Mult
+		runMatrix(dataSize);
+
 	}
  	public int getRandIndex(int dataSize){
 
@@ -152,20 +155,50 @@ class SingleRun{
 		}
 		System.out.println();
 	}
-	public static void runMatrix(){
+	public void printMatrix(int[][] array, int dataSize){
+		for(int i = 0; i < dataSize; i++){
+			for(int j = 0; j < dataSize; j++){
+				System.out.print(array[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	public void runMatrix(int dataSize){
+
+		//Generate Matricies
+		int[][] matrixA = getRandMatrix(dataSize);
+		int[][] matrixB = getRandMatrix(dataSize);
+		int[][] matrixResult = new int[dataSize][dataSize];
 
 		//Start Timer
 		timer.startTimer();
 
-		try{
-			Thread.sleep(3000);
-		}catch(Exception ex){}
+		//Multiply Matrix
+		for(int i = 0; i < dataSize; i++){
+			for(int j = 0; j < dataSize; j++){
+				for(int k = 0; k < dataSize; k++){
+					matrixResult[i][j] += matrixA[i][k] * matrixB[k][j];
+				}
+			}
+
+		}
+
 		
 		//End Timer
 		timer.endTimer();
 
 		//Report 
+		System.out.println("\n====Matrix Mult========="); 
 		System.out.println("Matrix - " + timer.getTimeString());
+		
+		System.out.println("MatrixA:");
+		//printMatrix(matrixA,dataSize);
+		
+		System.out.println("MatrixB:");
+		//printMatrix(matrixB,dataSize);
+
+		System.out.println("MatrixResult:");
+		//printMatrix(matrixResult,dataSize);
 
 	}
 
@@ -174,7 +207,7 @@ class SingleRun{
 		//Create Timer
 		timer = new MethodTimer();
 
-		SingleRun run = new SingleRun(timer,100);
+		SingleRun run = new SingleRun(timer,1000);
 
 	}
 }
