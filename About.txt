@@ -1,0 +1,79 @@
+=============================================================
+=====							=====
+=====		Project 2 - Parallel Prog.		=====
+=====							=====
+=====		Parallel Programming in Java		=====
+=====		By Brian Sharp				=====
+=====							=====
+=============================================================
+
+Purpose:
+	
+	To implement and analyze the growth of Parallel
+	Programming in java across several factors. 
+
+To Run: 
+
+	Single:
+		>make
+		>java SingleRun <<arraySize>> <<matrixSize>>
+
+	Parallel:
+		>make
+		>java ParallelRun <<arraySize>> <<matrixSize>> <<# of Processors>>
+		
+
+The Output:
+	
+	The program will output the time from the start of
+	each call to the time the problem finishes. The 
+	Program runs 4 operations of Big O notation: O(1),
+	O(n), O(n^2), O(n^3).
+
+Parallel Cluster Structure:
+
+	The program utalizes the socket communication that
+	is found in the Fork/Join Framework. Each problem
+	is first written as a RecursiveAction object. This
+	allows us to divide each problem into a set 
+	of managable objects each representing a different
+	section of the data. When we use a ForkJoinPool 
+	object to invoke each Object, each object is
+	forked into its own process. With ForkJoinPool,
+	we are able to pass variables to each process
+	when forked. It also handles the communication of
+	data (arrays and double arrays) to and from each
+	node. 
+
+Results of Analysis
+
+	I measured the run times of each method over data
+	sizes of 100,200,400,800,1600. I ran this data set
+	for a SingleRun and over np size 8,16,32,64 in 
+	ParallelRun. I then meaured the speed of the single
+	run as set Ts = { Ts1, Ts2, ...., Ts20}	and each 
+	parallel set Tp = {Tp1, Tp2, ...., Tp20}. For
+	each parallel set, we then has an Efficiency set
+	
+	Eff8  = {E1, E2, ..... , E20}
+	Eff16 = {E1, E2, ..... , E20}
+	Eff32 = {E1, E2, ..... , E20}
+	Eff64 = {E1, E2, ..... , E20}
+
+	The results can be seen at the following webpage:
+
+	www.bsmartbsharp.com/paralllel/proj2-results.html
+
+	
+	It is clear to see the system reached reasonable 
+	efficiencies for the tests. The highest efficiency
+	came with np = 8 at the largest of the data set.
+	The effiency increased as the data got larger and
+	increased as the complexity of the problem increased.
+	The Matrix mutliplication saw the most efficiency
+	mainly due to the fact that it runs in O(n^3) time
+	and has the greatest potential to see higher 
+	efficiencies. 
+	
+
+
